@@ -87,7 +87,6 @@ nav {
 /* Textarea estilo */
 textarea {
   width: 90%;
-  min-height: 500px;
   padding: 8px 10px;
   font-family: Arial, sans-serif;
   font-size: 14px;
@@ -102,6 +101,10 @@ textarea:focus {
   outline: none;
 }
 
+#textoConteudo{
+  min-height: 500px;
+
+}
 
 #veiculos{
     min-height: 80px;
