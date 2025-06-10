@@ -44,15 +44,21 @@
 
       <label for="itens_incluisos" class="label-inline">
       Itens Incluso:
-      <input type="text" name="itens_incluisos" id="itens_incluisos" autocomplete="off" class="input_incio">
+      <input type="text" name="itens_incluisos" id="itens_incluisos" autocomplete="off" class="input_incio" onblur="salvarValoresApi()">
       <button type="button" class="btn-copiar" onclick="copiarTexto('itens_incluisos')">COPIAR</button>
+      </label>
+       <label for="veiculos" class="label-inline">
+      Veiculos:
+      <textarea type="text" name="veiculos" id="veiculos" autocomplete="off" class="input_incio" onblur="salvarValoresApi()"></textarea>
+      <button type="button" class="btn-copiar" onclick="copiarTexto('veiculos')">COPIAR</button>
+
       </label>
 
       <h3>TRAY</h3>
 
       <label for="mensagem_adicional" class="label-inline">
       Mensagem adicional:
-      <input type="text" name="mensagem_adicional" id="mensagem_adicional" autocomplete="off" class="input_incio">
+      <input type="text" name="mensagem_adicional" id="mensagem_adicional" autocomplete="off" class="input_incio" >
       <button type="button" class="btn-copiar" onclick="copiarTexto('mensagem_adicional')">COPIAR</button>
       </label>
 
@@ -68,7 +74,7 @@
 
       <label for="palavras_chaves" class="label-inline">
       Palavras Chaves:
-      <input type="text" name="palavras_chaves" id="palavras_chaves" autocomplete="off" class="input_incio">
+      <input type="text" name="palavras_chaves" id="palavras_chaves" autocomplete="off" class="input_incio" onblur="salvarValoresApi()">
       <button type="button" class="btn-copiar" onclick="copiarTexto('palavras_chaves')">COPIAR</button>
       </label>
 
@@ -79,7 +85,7 @@
         <button type="button" class="btn-copiar" onclick="copiarTexto('textoConteudo')">COPIAR</button>
       </div>
       <div>
-        <textarea id="textoConteudo"></textarea>
+        <textarea id="textoConteudo" onblur="salvarValoresApi()"></textarea>
       </div>
       </div>
 

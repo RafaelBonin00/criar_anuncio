@@ -97,6 +97,20 @@ async function AtulizarInicio(id) {
       if (dados.finalizado){
         document.getElementById('titulo_vitrina').value = dados.titulotray;
         document.getElementById('itens_incluisos').value = dados.itensincluso;
+
+
+const veiculos = dados.veiculos;  // seu array de objetos
+
+const textoFormatado = veiculos.map((v, i) => {
+  const index = i + 1;  // para começar em 1
+  return `- ${v.veiculo}\n- ${v.ano_inicial} a ${v.ano_final}`;
+}).join('\n');
+
+document.getElementById('veiculos').value = textoFormatado;
+
+
+
+
         BuscarTextoBase("MensagemAdicional").then(texto => {
           document.getElementById('mensagem_adicional').value = texto;
         });
@@ -114,6 +128,21 @@ async function AtulizarInicio(id) {
           const titulovitrina = gerarTitulo(dados);
           document.getElementById('titulo_vitrina').value = titulovitrina;
           document.getElementById('itens_incluisos').value = gerarItensInclusos(dados);
+
+
+     
+
+const veiculos = dados.veiculos;  // seu array de objetos
+
+const textoFormatado = veiculos.map((v, i) => {
+  const index = i + 1;  // para começar em 1
+  return `V${index} - ${v.veiculo}\nA${index} - ${v.ano_inicial} - ${v.ano_final}`;
+}).join('\n');
+
+document.getElementById('veiculos').value = textoFormatado;
+
+
+
 
           BuscarTextoBase("MensagemAdicional").then(texto => {
             document.getElementById('mensagem_adicional').value = texto;
@@ -151,6 +180,10 @@ async function salvarValoresApi() {
   const itens_incluisos = document.getElementById('itens_incluisos').value;
   const palavras_chaves = document.getElementById('palavras_chaves').value;
   const textoConteudo = document.getElementById('textoConteudo').value;
+  const veiculosTexto = document.getElementById('veiculos').value;
+
+  // converte texto para array de objetos
+  const veiculos = textoParaVeiculos(veiculosTexto);
 
   if (codigo === "Lista zerada") {
     alert('Sem dados para atualizar');
@@ -171,8 +204,8 @@ async function salvarValoresApi() {
         itensincluso: itens_incluisos,
         palavraschaves: palavras_chaves,
         textfinal: textoConteudo,
-        finalizado:true
-
+        veiculos: veiculos,   // envia o array convertido
+        finalizado: true
       })
     });
 
@@ -180,17 +213,33 @@ async function salvarValoresApi() {
       const errorText = await response.text();
       throw new Error(`Erro na atualização: ${response.status} - ${errorText}`);
     }
-
-    console.log('Cadastro salvo com sucesso!');
-    AtulizarInicio(codigo)
-
+    AtulizarInicio(codigo);
 
   } catch (error) {
     console.error(error);
   }
 }
 
+function textoParaVeiculos(texto) {
+  const linhas = texto.trim().split('\n');
 
+  const veiculos = [];
+
+  for (let i = 0; i < linhas.length; i += 2) {
+    // remove o "- " e pega o nome do veículo
+    const veiculo = linhas[i].replace(/^- /, '').trim();
+
+    // remove o "- ", pega os anos, separa pelo " a "
+    const anos = linhas[i + 1].replace(/^- /, '').trim().split(' a ');
+
+    const ano_inicial = anos[0] || "";
+    const ano_final = anos[1] || "";
+
+    veiculos.push({ veiculo, ano_inicial, ano_final });
+  }
+
+  return veiculos;
+}
 
 
 async function BuscarTextoBase(tipo) {
@@ -434,9 +483,8 @@ function copiarTexto(idInput) {
 
   try {
     document.execCommand('copy');
-    alert('Texto copiado: ' + input.value);
   } catch (err) {
-    alert('Falha ao copiar o texto.');
+    return;
   }
 
   // Deseleciona o input após copiar

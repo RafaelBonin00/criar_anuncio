@@ -101,3 +101,8 @@ textarea:focus {
   border-color: #007bff;
   outline: none;
 }
+
+
+#veiculos{
+    min-height: 80px;
+}
