@@ -1,0 +1,89 @@
+#catalogo-container {
+  max-width: 600px;
+  margin: 20px auto;
+  font-family: Arial, sans-serif;
+}
+
+.titulo_lista{
+    align-items: center;
+    text-align: center;
+    padding: 0 0 2% 0;
+    border-bottom: 2px black solid;
+}
+
+#catalogo-container > div {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 8px 12px;
+  margin-bottom: 8px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+#catalogo-container > div:hover {
+  background-color: #f0f0f0;
+}
+
+#catalogo-container button {
+  background-color: #e74c3c;
+  border: none;
+  color: white;
+  padding: 6px 12px;
+  margin-right: 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+}
+
+#catalogo-container button:hover {
+  background-color: #c0392b;
+}
+
+#catalogo-container button:focus {
+  outline: none;
+  box-shadow: 0 0 3px 2px rgba(231, 76, 60, 0.6);
+}
+
+.div_importar {
+  display: flex;
+  justify-content: center;  
+  align-items: center;      
+  gap: 12px;               
+  margin: 20px 0;         
+}
+
+
+#fileInput {
+  display: inline-block;
+  padding: 6px 10px;
+  margin-right: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+#uploadBtn {
+  background-color: #f77307;
+  color: white;
+  border: none;
+  padding: 8px 18px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 4px;
+  cursor: pointer;
+  vertical-align: middle;
+  transition: background-color 0.3s ease;
+}
+
+#uploadBtn:hover,
+#uploadBtn:focus {
+  background-color: #1f6391;
+  outline: none;
+}

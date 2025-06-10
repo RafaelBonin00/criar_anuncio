@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Configuração</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="config.css" />
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="./index.html">Inicio</a></li>
+        <li><a href="./cadastro.html">Cadastrar</a></li>
+        <li><a href="./historico.html">Historico</a></li>
+        <li><a href="./lista.html">Lista</a></li>
+        <li><a href="./configs.html">Configuração</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h2>Editar textos</h2>
+    <h3>Tray</h3>
+    <label for="MensagemAdicional">Mensagem Adicional:</label>
+    <textarea id="MensagemAdicional" data-titulo="MensagemAdicional"></textarea>
+
+    <label for="DescricaoTray">Descrição Tray:</label>
+    <textarea id="DescricaoTray" data-titulo="DescricaoTray"></textarea>
+
+
+    <h3>Textos Descrição</h3>
+    <div class="radio-group" role="radiogroup" aria-label="Selecione o texto para editar">
+      <label><input type="radio" name="tipoTexto" value="textoprincipal" checked> Texto Principal</label>
+      <label><input type="radio" name="tipoTexto" value="textooriginal"> Texto Original</label>
+      <label><input type="radio" name="tipoTexto" value="textoavaria"> Texto Avaria</label>
+    </div>
+
+    <textarea id="textoConteudo" placeholder="Digite o texto aqui..."></textarea>
+
+  </div>
+
+  <script src="config.js"></script>
+</body>
+</html>

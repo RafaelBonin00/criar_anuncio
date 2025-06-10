@@ -1,0 +1,83 @@
+<!-- cadastro.html -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cadastro de Peças</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="cadastro.css" />
+
+</head>
+<body>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="./index.html">Inicio</a></li>
+          <li><a href="./cadastro.html">Cadastrar</a></li>
+          <li><a href="./historico.html">Historico</a></li>
+          <li><a href="./lista.html">Lista</a></li>
+          <li><a href="./configs.html">Configuração</a></li>
+        </ul>
+      </nav>
+    </header>
+
+  
+  <div>
+        <h2>Cadastro de Peças</h2>
+
+          
+        </div>
+        <label for="codigo">Código:</label>
+        <input type="text" id="codigo" autocomplete="off" onblur="carregarPorCodigo(this.value)"/>
+        <p>Descrição: <span id="descricaoLista"></span></p>
+
+        <button type="button" id="btnProximo" onclick="carregaPrimeiroCodigo()">Próximo</button>
+
+        <div class="input-container">
+            <label for="peca_cadastro">Peça:</label>
+            <input type="text" id="peca_cadastro" autocomplete="off"/>
+        </div>
+        <div class="input-container">
+            <label for="quantidade">Quantidade de Veículos:</label>
+            <input type="number" id="quantidade" min="1" value="1" onchange="gerarCampos()" />
+        </div>
+        <div id="veiculos-container"></div>
+        <div class="input-container">
+            <label for="complemento_titulo">Complemento Título:</label>
+            <input type="text" id="complemento_titulo" autocomplete="off" />
+        </div>
+        <div class="input-container">
+            <label for="complemento_itens">Complemento Itens Incluso:</label>
+            <input type="text" id="complemento_itens" autocomplete="off" />
+        </div>
+        <div class="input-container">
+            <label for="numero_original">Número Original:</label>
+            <input type="text" id="numero_original" autocomplete="off" />
+        </div>
+        <div class="input-container">
+            <label for="numero_fabrica">Número Fabrica:</label>
+            <input type="text" id="numero_fabrica" autocomplete="off" />
+        </div>
+        <div class="checkbox-container">
+            <div class="checkbox-item"><input type="checkbox" id="original"/><label for="original">Original</label></div>
+            <div class="checkbox-item"><input type="checkbox" id="generoFeminino" /><label for="generoFeminino">Gênero Feminino</label></div>
+            <div class="checkbox-item"><input type="checkbox" id="ladoDireito" /><label for="ladoDireito">Lado Direito</label></div>
+            <div class="checkbox-item"><input type="checkbox" id="ladoEsquerdo" /><label for="ladoEsquerdo">Lado Esquerdo</label></div>
+            <div class="checkbox-item"><input type="checkbox" id="dianteiro" /><label for="dianteiro">Dianteiro</label></div>
+            <div class="checkbox-item"><input type="checkbox" id="traseiro" /><label for="traseiro">Traseiro</label></div>
+            <div class="checkbox-item"><input type="checkbox" id="superior" /><label for="superior">Superior</label></div>
+            <div class="checkbox-item"><input type="checkbox" id="inferior" /><label for="inferior">Inferior</label></div>
+        </div>
+        <button onclick="salvarValoresApi()">Salvar</button>
+    </div>
+
+  <script src="./script.js"></script>
+  <script src="./cadastrar.js"></script>
+  <script>
+    window.onload = () => {
+        carregaPrimeiroCodigo();
+        gerarCampos();
+    };
+    </script>
+</body>
+</html>

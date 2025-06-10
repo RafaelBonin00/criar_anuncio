@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cadastro de Peças</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="inicio.css" />
+
+</head>
+<body>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="./index.html">Inicio</a></li>
+          <li><a href="./cadastro.html">Cadastrar</a></li>
+          <li><a href="./historico.html">Historico</a></li>
+          <li><a href="./lista.html">Lista</a></li>
+          <li><a href="./configs.html">Configuração</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <div class="div_container">
+
+    
+      <label for="buscarocodigo" class="label-inline">
+      Buscar Codigo:
+      <input type="text" name="buscarocodigo" id="buscarocodigo" autocomplete="off" onblur="AtulizarInicio(this.value)">
+      <button type="button" class="btn-copiar" onclick="copiarTexto('buscarocodigo')">COPIAR</button>
+      </label>
+
+      <p id="informacao_tec">
+      Nenhum dado encontrado. Deseja <a href="./cadastro.html">Cadastrar</a> um novo codigo?
+      </p>
+
+      <div>
+      <label for="titulo_vitrina" class="label-inline">
+      Titulo:
+      <input type="text" name="titulo_vitrina" id="titulo_vitrina" autocomplete="off" class="input_incio" onblur="salvarValoresApi()">
+      <button type="button" class="btn-copiar" onclick="copiarTexto('titulo_vitrina')">COPIAR</button>
+      </label>
+
+      <nav></nav>
+
+      <label for="itens_incluisos" class="label-inline">
+      Itens Incluso:
+      <input type="text" name="itens_incluisos" id="itens_incluisos" autocomplete="off" class="input_incio">
+      <button type="button" class="btn-copiar" onclick="copiarTexto('itens_incluisos')">COPIAR</button>
+      </label>
+
+      <h3>TRAY</h3>
+
+      <label for="mensagem_adicional" class="label-inline">
+      Mensagem adicional:
+      <input type="text" name="mensagem_adicional" id="mensagem_adicional" autocomplete="off" class="input_incio">
+      <button type="button" class="btn-copiar" onclick="copiarTexto('mensagem_adicional')">COPIAR</button>
+      </label>
+
+      <nav></nav>
+
+      <label for="meta_description" class="label-inline">
+      Meta Description:
+      <input type="text" name="meta_description" id="meta_description" autocomplete="off" class="input_incio">
+      <button type="button" class="btn-copiar" onclick="copiarTexto('meta_description')">COPIAR</button>
+      </label>
+
+      <nav></nav>
+
+      <label for="palavras_chaves" class="label-inline">
+      Palavras Chaves:
+      <input type="text" name="palavras_chaves" id="palavras_chaves" autocomplete="off" class="input_incio">
+      <button type="button" class="btn-copiar" onclick="copiarTexto('palavras_chaves')">COPIAR</button>
+      </label>
+
+      <nav></nav>
+
+      <div>
+        <label for="textoConteudo" style="display:block; margin-bottom: 8px;">Texto Descrição</label>
+        <button type="button" class="btn-copiar" onclick="copiarTexto('textoConteudo')">COPIAR</button>
+      </div>
+      <div>
+        <textarea id="textoConteudo"></textarea>
+      </div>
+      </div>
+
+    </div>
+
+    
+  <script src="script.js"></script>
+</body>

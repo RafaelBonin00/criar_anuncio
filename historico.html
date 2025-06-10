@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Histórico</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="historico.css" />
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="./index.html">Inicio</a></li>
+        <li><a href="./cadastro.html">Cadastrar</a></li>
+        <li><a href="./historico.html" class="active">Histórico</a></li>
+        <li><a href="./lista.html">Lista</a></li>
+        <li><a href="./configs.html">Configuração</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <h2>Histórico de Peças</h2>
+
+    <table id="tabelaRegistros" border="1" cellspacing="0" cellpadding="5">
+      <thead>
+        <tr>
+          <th>Código</th>
+          <th>Peça</th>
+          <th>Veículos</th>
+          <th>Marca</th>
+          <th>Complemento Título</th>
+          <th>Complemento Informação</th>
+          <th>Número Original</th>
+          <th>Número Fabrica</th>
+          <th>Flags</th>
+          <th>Salvo em</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Linhas inseridas pelo JS -->
+      </tbody>
+    </table>
+  </main>
+
+  <script src="script.js"></script>
+  <script src="historico.js"></script>
+  <script>
+    window.onload = () => {
+      carregarHistorico();
+    };
+  </script>
+</body>
+</html>

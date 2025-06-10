@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Lista</title>
+  <link rel="stylesheet" href="lista.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="./index.html">Inicio</a></li>
+          <li><a href="./cadastro.html">Cadastrar</a></li>
+          <li><a href="./historico.html">Historico</a></li>
+          <li><a href="./lista.html">Lista</a></li>
+          <li><a href="./configs.html">Configuração</a></li>
+        </ul>
+      </nav>
+    </header>
+    <div class="div_importar">
+      <input type="file" id="fileInput"/>
+      <button id="uploadBtn">Importar Excel</button> 
+    </div>
+
+    <h2 class="titulo_lista">Lista Itens Pentendes</h2>
+    <div id="catalogo-container">Carregando catálogo...</div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+    <script src="script.js"></script>
+    <script src="lista.js"></script>
+    <script>
+    window.onload = () => {
+        carregaLista();
+    };
+    </script>
+
+        
+</body>

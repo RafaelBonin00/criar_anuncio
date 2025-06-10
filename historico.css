@@ -1,0 +1,86 @@
+/* Layout geral da tabela */
+#tabelaRegistros {
+  width: 95%;
+  margin: 0 auto;           /* remove margem externa vertical */
+  border-collapse: collapse;
+  font-family: Arial, sans-serif;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  font-size: 0.7rem;        /* fonte bem menor */
+}
+
+/* Cabeçalho */
+#tabelaRegistros thead {
+  background-color: #2c3e50;
+  color: #ecf0f1;
+  font-weight: bold;
+  text-align: left;
+}
+
+#tabelaRegistros th, #tabelaRegistros td {
+  padding-left: 12px;       /* padding só na esquerda */
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-right: 0;
+  border-bottom: 1px solid #ddd;
+  vertical-align: middle;
+}
+
+/* Linhas pares com cor diferente */
+#tabelaRegistros tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Hover nas linhas */
+#tabelaRegistros tbody tr:hover {
+  background-color: #e1f0ff;
+}
+/* Data formatada, estilo mais leve */
+.data-salvo {
+  font-style: italic;
+}
+.flags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+/* Estilo base das flags */
+.flag-item {
+  color: white;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+/* Cores específicas por grupo */
+.flag-finalizado {
+  background-color: #e74c3c; /* Vermelho */
+}
+
+.flag-original,
+.flag-generofeminino {
+  background-color: #3498db; /* Azul */
+}
+
+.flag-ladodireito,
+.flag-ladoesquerdo {
+  background-color: #2ecc71; /* Verde claro */
+}
+
+.flag-dianteiro,
+.flag-traseiro {
+  background-color: #9b59b6; /* Roxo claro */
+}
+
+.flag-superior,
+.flag-inferior {
+  background-color: #34495e; /* Azul escuro */
+}

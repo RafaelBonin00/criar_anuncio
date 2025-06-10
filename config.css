@@ -1,0 +1,78 @@
+/* Container geral */
+.container {
+  margin: 20px auto;
+  padding: 15px;
+  font-family: Arial, sans-serif;
+  background: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+/* Títulos */
+.container h2, .container h3 {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* Labels */
+label {
+  display: block;
+  font-weight: bold;
+  margin-top: 15px;
+  margin-bottom: 6px;
+  color: #555;
+}
+
+/* Textareas */
+textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 0.9rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+#textoConteudo{
+    min-height: 500px;
+}
+
+
+
+
+
+textarea:focus {
+  border-color: #3498db;
+  outline: none;
+  background-color: #fff;
+}
+
+/* Grupo de radio buttons */
+.radio-group {
+  margin: 15px 0;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.radio-group label {
+  font-weight: normal;
+  cursor: pointer;
+  user-select: none;
+  color: #333;
+}
+
+.radio-group input[type="radio"] {
+  margin-right: 6px;
+  cursor: pointer;
+}
+
+/* Para melhorar acessibilidade no foco */
+.radio-group input[type="radio"]:focus + label {
+  outline: 2px solid #3498db;
+  outline-offset: 2px;
+}
+
+
