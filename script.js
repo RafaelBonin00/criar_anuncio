@@ -87,92 +87,163 @@ async function AtulizarInicio(id) {
     return; // sai da função se der erro na conversão
   }
 
-  if (!isNaN(id)) { // verifica se id é número válido
+  if (!isNaN(id)) { 
+    
     const returndados = await buscarDadosForID(id);
+    const informacao_tecnica = document.getElementById('informacao_tec')
+    const cost_titulo_vitrina = document.getElementById('titulo_vitrina')
+    const itens_incluisos = document.getElementById('itens_incluisos')
+    const mensagem_adicional = document.getElementById('mensagem_adicional')
+    const meta_description = document.getElementById('meta_description')
+    const palavras_chaves = document.getElementById('palavras_chaves')
+
     if (returndados.length > 0) {
       const dados = returndados[0];
       if(dados.historico){
-        document.getElementById('informacao_tec').textContent = dados.inf_tec;
+        informacao_tecnica.textContent = dados.inf_tec;
 
       if (dados.finalizado){
-        document.getElementById('titulo_vitrina').value = dados.titulotray;
-        document.getElementById('itens_incluisos').value = dados.itensincluso;
 
+        cost_titulo_vitrina.value = dados.titulotray;
+        itens_incluisos.value = dados.itensincluso;
 
-const veiculos = dados.veiculos;  // seu array de objetos
-
-const textoFormatado = veiculos.map((v, i) => {
-  const index = i + 1;  // para começar em 1
-  return `- ${v.veiculo}\n- ${v.ano_inicial} a ${v.ano_final}`;
-}).join('\n');
-
-document.getElementById('veiculos').value = textoFormatado;
-
-
+        gerarInputsVeiculos(dados.veiculos, 'container-veiculos');
 
 
         BuscarTextoBase("MensagemAdicional").then(texto => {
-          document.getElementById('mensagem_adicional').value = texto;
+          mensagem_adicional.value = texto;
+        });
+        BuscarTextoBase("DescricaoTray").then(texto => {
+          const novoTexto = texto.replace("--", `- ${dados.titulotray} -`);
+          meta_description.value = novoTexto;
+        });
+
+        palavras_chaves.value = dados.palavraschaves;
+
+        montarTextoCompleto(dados).then(texto => {
+            document.getElementById('textoConteudo').value = texto;
+          });
+
+          
+        gerarInputsML(dados)
+
+      }else{
+
+        const titulovitrina = gerarTitulo(dados);
+        cost_titulo_vitrina.value = titulovitrina;
+        itens_incluisos.value = gerarItensInclusos(dados);
+
+        gerarInputsVeiculos(dados.veiculos, 'container-veiculos');
+
+
+        BuscarTextoBase("MensagemAdicional").then(texto => {
+          mensagem_adicional.value = texto;
         });
 
         BuscarTextoBase("DescricaoTray").then(texto => {
-          const novoTexto = texto.replace("--", `- ${dados.titulotray} -`);
-          document.getElementById('meta_description').value = novoTexto;
+          const novoTexto = texto.replace("--", `- ${titulovitrina} -`);
+          meta_description.value = novoTexto;
         });
 
-        document.getElementById('palavras_chaves').value = dados.palavraschaves;
+        document.getElementById('palavras_chaves').value = gerarPalavrasChaves(dados);
 
-        document.getElementById('textoConteudo').value = dados.textfinal;
+        montarTextoCompleto(dados).then(texto => {
+          document.getElementById('textoConteudo').value = texto;
+        });
 
-        }else{
-          const titulovitrina = gerarTitulo(dados);
-          document.getElementById('titulo_vitrina').value = titulovitrina;
-          document.getElementById('itens_incluisos').value = gerarItensInclusos(dados);
-
-
-     
-
-const veiculos = dados.veiculos;  // seu array de objetos
-
-const textoFormatado = veiculos.map((v, i) => {
-  const index = i + 1;  // para começar em 1
-  return `V${index} - ${v.veiculo}\nA${index} - ${v.ano_inicial} - ${v.ano_final}`;
-}).join('\n');
-
-document.getElementById('veiculos').value = textoFormatado;
-
-
-
-
-          BuscarTextoBase("MensagemAdicional").then(texto => {
-            document.getElementById('mensagem_adicional').value = texto;
-          });
-
-          BuscarTextoBase("DescricaoTray").then(texto => {
-            const novoTexto = texto.replace("--", `- ${titulovitrina} -`);
-            document.getElementById('meta_description').value = novoTexto;
-          });
-
-
-
-          document.getElementById('palavras_chaves').value = gerarPalavrasChaves(dados);
-          montarTextoCompleto(dados).then(texto => {
-            document.getElementById('textoConteudo').value = texto;
-          });
-        }
-
-      } else {
-        document.getElementById('informacao_tec').innerHTML = `Codigo sem cadastro, realizar o <a href="./cadastro.html">Cadastrar</a> para continuar.`;
-
+        gerarInputsML(dados)
       }
-      }else{
-        document.getElementById('informacao_tec').innerHTML = `Codigo não listado. Verificar codigos pendentes na <a href="./Lista.html">Lista</a>.`;
-      }
-      
+
+    } else {
+      document.getElementById('informacao_tec').innerHTML = `Codigo sem cadastro, realizar o <a href="./cadastro.html">Cadastrar</a> para continuar.`;
+
+    }
+    }else{
+      document.getElementById('informacao_tec').innerHTML = `Codigo não listado. Verificar codigos pendentes na <a href="./Lista.html">Lista</a>.`;
+    }
+    
   } else {
     document.getElementById('informacao_tec').innerHTML = `Nenhum dado encontrado. Deseja <a href="./cadastro.html">Cadastrar</a> um novo codigo?`;;
   }
 }
+
+
+function gerarInputsVeiculos(veiculos, containerId) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = ''; // limpa antes
+
+  veiculos.forEach((v, index) => {
+    const div = document.createElement('div');
+    div.style.marginBottom = '10px';
+
+    const inputVeiculo = document.createElement('input');
+    inputVeiculo.type = 'text';
+    inputVeiculo.name = `veiculo_${index}`;
+    inputVeiculo.value = v.veiculo;
+    inputVeiculo.placeholder = 'Veículo';
+    inputVeiculo.autocomplete = 'off';
+    inputVeiculo.onblur = salvarValoresApi;
+
+    const labelAnoInicial = document.createElement('label');
+    labelAnoInicial.textContent = ' - ';
+    labelAnoInicial.style.marginLeft = '10px';
+
+    const inputAnoInicial = document.createElement('input');
+    inputAnoInicial.type = 'text';
+    inputAnoInicial.name = `ano_inicial_${index}`;
+    inputAnoInicial.value = v.ano_inicial;
+    inputAnoInicial.style.width = '50px';
+    inputAnoInicial.autocomplete = 'off';
+    inputAnoInicial.onblur = salvarValoresApi;
+
+    const labelAnoFinal = document.createElement('label');
+    labelAnoFinal.textContent = ' A ';
+    labelAnoFinal.style.marginLeft = '10px';
+
+    const inputAnoFinal = document.createElement('input');
+    inputAnoFinal.type = 'text';
+    inputAnoFinal.name = `ano_final_${index}`;
+    inputAnoFinal.value = v.ano_final;
+    inputAnoFinal.style.width = '50px';
+    inputAnoFinal.autocomplete = 'off';
+    inputAnoFinal.onblur = salvarValoresApi;
+
+    div.appendChild(inputVeiculo);
+    div.appendChild(labelAnoInicial);
+    div.appendChild(inputAnoInicial);
+    div.appendChild(labelAnoFinal);
+    div.appendChild(inputAnoFinal);
+
+    container.appendChild(div);
+  });
+}
+
+
+
+function coletarVeiculosDoContainer(containerId) {
+  const container = document.getElementById(containerId);
+  const veiculos = [];
+
+  // Pegamos todos os inputs de veiculo dentro do container
+  const inputsVeiculo = container.querySelectorAll('input[name^="veiculo_"]');
+
+  inputsVeiculo.forEach(inputVeiculo => {
+    const index = inputVeiculo.name.split('_')[1];
+
+    const veiculo = inputVeiculo.value.trim();
+    const ano_inicial = container.querySelector(`input[name="ano_inicial_${index}"]`)?.value.trim() || "";
+    const ano_final = container.querySelector(`input[name="ano_final_${index}"]`)?.value.trim() || "";
+
+    veiculos.push({
+      veiculo,
+      ano_inicial,
+      ano_final
+    });
+  });
+
+  return veiculos;
+}
+
 
 async function salvarValoresApi() {
   const codigo = document.getElementById('buscarocodigo').value;
@@ -180,10 +251,11 @@ async function salvarValoresApi() {
   const itens_incluisos = document.getElementById('itens_incluisos').value;
   const palavras_chaves = document.getElementById('palavras_chaves').value;
   const textoConteudo = document.getElementById('textoConteudo').value;
-  const veiculosTexto = document.getElementById('veiculos').value;
+  const veiculosAtualizados = coletarVeiculosDoContainer('container-veiculos');
+  const arrayml = coletarValoresInputs()
 
-  // converte texto para array de objetos
-  const veiculos = textoParaVeiculos(veiculosTexto);
+
+
 
   if (codigo === "Lista zerada") {
     alert('Sem dados para atualizar');
@@ -204,7 +276,8 @@ async function salvarValoresApi() {
         itensincluso: itens_incluisos,
         palavraschaves: palavras_chaves,
         textfinal: textoConteudo,
-        veiculos: veiculos,   // envia o array convertido
+        veiculos:veiculosAtualizados,
+        arrayml:arrayml,
         finalizado: true
       })
     });
@@ -279,12 +352,18 @@ async function montarTextoCompleto(dados) {
   }
 
   let textoBase = resposta[0].text;
+  let itensInclusos = "";
 
-  const itensInclusos = gerarItensInclusos(dados);
+  if(dados.finalizado){
+    itensInclusos = dados.itensincluso;
+  }else{
+    itensInclusos = gerarItensInclusos(dados);
+  }
+  
   const textoVeiculos = gerarTextoVeiculos(dados);
 
   // Substitui no texto base
-  textoBase = textoBase.replace("- CONTEÚDO DA EMBALAGEM:", `- CONTEÚDO DA EMBALAGEM:\n\n${itensInclusos}\n`);
+  textoBase = textoBase.replace("- CONTEÚDO DA EMBALAGEM:", `- CONTEÚDO DA EMBALAGEM:\n\n\n${itensInclusos}\n`);
 
   if (dados.veiculos.length === 1) {
     // Para 1 veículo, separar linhas VEÍCULOS e ANOS, já incluídos na gerarTextoVeiculos
@@ -298,8 +377,17 @@ async function montarTextoCompleto(dados) {
     textoBase = textoBase.replace("-ANOS:", "");  // Remove linha -ANOS: vazia
   }
 
+  // Lógica para o código original
+  if (dados.num_original !== "" && dados.num_original != null && dados.num_original !== false) {
+    textoBase = textoBase.replace("- CÓDIGO ORIGINAL:", `- CÓDIGO ORIGINAL: ${dados.num_original}`);
+  } else {
+    // Remove linha - CÓDIGO ORIGINAL: do texto se existir
+    textoBase = textoBase.replace(/- CÓDIGO ORIGINAL:.*\n.*\n.*\n?/, "");
+  }
+
   return textoBase;
 }
+
 
 function gerarTextoVeiculos(dados) {
   if (!dados.veiculos || dados.veiculos.length === 0) return "";
@@ -341,13 +429,17 @@ function gerarTextoVeiculos(dados) {
 
 function gerarVeiculos(dados){
   if (Array.isArray(dados.veiculos) && dados.veiculos.length > 0) {
-    // Mapeia cada veículo para "veiculo ano_inicial A ano_final"
+    const anoAtual = new Date().getFullYear();
     const modelosVeiculosStr = dados.veiculos
-      .map(v => `${v.veiculo} ${v.ano_inicial} A ${v.ano_final}`)
+      .map(v => {
+        const anoFinal = v.ano_final ? v.ano_final : anoAtual;
+        return `${v.veiculo} ${v.ano_inicial} A ${anoFinal}`;
+      })
       .join(" ");
-      return modelosVeiculosStr
+    return modelosVeiculosStr;
   }
 }
+
 
 function gerarPalavrasChaves(dados) {
   let Palavraschaves = "VAN, VANS, NOVO, NOVA, PEÇA, PEÇAS, QUALIDADE, PREÇO, PROMOÇÃO, OFERTA, DESCONTO";
@@ -487,10 +579,171 @@ function copiarTexto(idInput) {
     return;
   }
 
-  // Deseleciona o input após copiar
   window.getSelection().removeAllRanges();
 }
 
+// Gera variações de texto para os lados direito e esquerdo
+function gerarVariacoesLaterais(lado) {
+  if (lado === 'direita') {
+    return ['DIREITO', 'PASSAGEIRO', 'CARONA'];
+  } else if (lado === 'esquerda') {
+    return ['ESQUERDO', 'MOTORISTA', 'CONDUTOR'];
+  }
+  return ['', '', ''];
+}
+
+// Monta texto final, com posições e veiculo, tudo maiúsculo e original no final
+function montarTexto(dados, veiculoObj, variacaoLateral = '') {
+  const partes = [dados.peca];
+
+  const posicoes = [
+    { prop: 'dianteiro', texto: 'Dianteiro' },
+    { prop: 'traseiro', texto: 'Traseiro' },
+    { prop: 'superior', texto: 'Superior' },
+    { prop: 'inferior', texto: 'Inferior' }
+  ];
+
+  posicoes.forEach(p => {
+    if (dados[p.prop]) partes.push(p.texto);
+  });
+
+  if (variacaoLateral) {
+    partes.push(variacaoLateral);
+  } else {
+    if (dados.direita) partes.push('Direita');
+    if (dados.esquerda) partes.push('Esquerda');
+  }
+
+  partes.push(`${veiculoObj.veiculo} ${veiculoObj.ano_inicial} A ${veiculoObj.ano_final}`);
+
+  if (dados.original) partes.push('Original');
+
+  return partes.join(' ').toUpperCase();
+}
+
+function gerarInputsML(dados) {
+  const container = document.getElementById('container-ml');
+  container.innerHTML = '';
+
+  function checarTamanhoInput(event) {
+    const input = event.target;
+    if (input.value.length > 60) {
+      input.classList.add('input-error');
+    } else {
+      input.classList.remove('input-error');
+    }
+  }
+
+  if (dados.finalizado && Array.isArray(dados.arrayml)) {
+    // Usar dados.arrayml para gerar inputs, 1 input para cada elemento do arrayml
+    dados.arrayml.forEach((texto, index) => {
+      const idInput = `input_finalizado_${index}`;
+      const wrapper = document.createElement('div');
+      wrapper.classList.add('input-wrapper');
+
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.value = texto;
+      input.id = idInput;
+      input.classList.add('input-veiculo');
+      input.addEventListener('input', checarTamanhoInput);
+      input.setAttribute('onblur', 'salvarValoresApi()');
+      input.autocomplete = 'off';
+
+      const btnCopy = document.createElement('button');
+      btnCopy.textContent = 'Copiar';
+      btnCopy.type = 'button';
+      btnCopy.classList.add('btn-copiar');
+      btnCopy.onclick = () => copiarTexto(idInput);
+
+      wrapper.appendChild(input);
+      wrapper.appendChild(btnCopy);
+      container.appendChild(wrapper);
+    });
+  } else {
+    // Continua seu fluxo normal para dados.finalizado == false
+    const veiculos = dados.veiculos || [];
+
+    if (veiculos.length === 1) {
+      let variacoes = ['', '', '', '', ''];
+      if (dados.direita) {
+        variacoes.splice(0, 3, ...gerarVariacoesLaterais('direita'));
+      } else if (dados.esquerda) {
+        variacoes.splice(0, 3, ...gerarVariacoesLaterais('esquerda'));
+      }
+
+      for (let i = 0; i < 5; i++) {
+        const idInput = `input_veiculo0_${i}`;
+        const wrapper = document.createElement('div');
+        wrapper.classList.add('input-wrapper');
+
+        const texto = montarTexto(dados, veiculos[0], variacoes[i]);
+
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.value = texto;
+        input.id = idInput;
+        input.classList.add('input-veiculo');
+        input.addEventListener('input', checarTamanhoInput);
+        input.setAttribute('onblur', 'salvarValoresApi()');
+        input.autocomplete = 'off';
 
 
+        const btnCopy = document.createElement('button');
+        btnCopy.textContent = 'Copiar';
+        btnCopy.type = 'button';
+        btnCopy.classList.add('btn-copiar');
+        btnCopy.onclick = () => copiarTexto(idInput);
+
+        wrapper.appendChild(input);
+        wrapper.appendChild(btnCopy);
+        container.appendChild(wrapper);
+      }
+    } else if (veiculos.length > 1) {
+      veiculos.forEach((v, idx) => {
+        let variacoes = ['', '', ''];
+        if (dados.direita) variacoes = gerarVariacoesLaterais('direita');
+        else if (dados.esquerda) variacoes = gerarVariacoesLaterais('esquerda');
+
+        for (let i = 0; i < 3; i++) {
+          const idInput = `input_veiculo${idx}_${i}`;
+          const wrapper = document.createElement('div');
+          wrapper.classList.add('input-wrapper');
+
+          const texto = montarTexto(dados, v, variacoes[i]);
+
+          const input = document.createElement('input');
+          input.type = 'text';
+          input.value = texto;
+          input.id = idInput;
+          input.placeholder = `Veículo ${idx + 1}`;
+          input.classList.add('input-veiculo');
+          input.addEventListener('input', checarTamanhoInput);
+
+          const btnCopy = document.createElement('button');
+          btnCopy.textContent = 'Copiar';
+          btnCopy.type = 'button';
+          btnCopy.classList.add('btn-copiar');
+          btnCopy.onclick = () => copiarTexto(idInput);
+
+          wrapper.appendChild(input);
+          wrapper.appendChild(btnCopy);
+          container.appendChild(wrapper);
+        }
+      });
+    }
+  }
+}
+
+function coletarValoresInputs() {
+  const container = document.getElementById('container-ml');
+  const inputs = container.querySelectorAll('input.input-veiculo');
+  const valores = [];
+
+  inputs.forEach(input => {
+    valores.push(input.value);
+  });
+
+  return valores;
+}
 

@@ -47,12 +47,6 @@
       <input type="text" name="itens_incluisos" id="itens_incluisos" autocomplete="off" class="input_incio" onblur="salvarValoresApi()">
       <button type="button" class="btn-copiar" onclick="copiarTexto('itens_incluisos')">COPIAR</button>
       </label>
-       <label for="veiculos" class="label-inline">
-      Veiculos:
-      <textarea type="text" name="veiculos" id="veiculos" autocomplete="off" class="input_incio" onblur="salvarValoresApi()"></textarea>
-      <button type="button" class="btn-copiar" onclick="copiarTexto('veiculos')">COPIAR</button>
-
-      </label>
 
       <h3>TRAY</h3>
 
@@ -79,18 +73,41 @@
       </label>
 
       <nav></nav>
+      <label for="veiculos" class="label-inline">
+        Veiculos: (não atualiza o titulo, apenas o texto)
+      </label>
+      <div id="container-veiculos"></div>
 
+    <div class="texto_ml">
       <div>
-        <label for="textoConteudo" style="display:block; margin-bottom: 8px;">Texto Descrição</label>
-        <button type="button" class="btn-copiar" onclick="copiarTexto('textoConteudo')">COPIAR</button>
-      </div>
-      <div>
-        <textarea id="textoConteudo" onblur="salvarValoresApi()"></textarea>
+          <div class="titulo_texto">
+            <label for="textoConteudo" style="display:block; margin-bottom: 8px;">Texto Descrição</label>
+            <button type="button" class="btn-copiar" onclick="copiarTexto('textoConteudo')">COPIAR</button>
+          </div>
+          <textarea id="textoConteudo"></textarea>
+        </div>
+        <div>
+          <h3>Mercado Livre</h3>
+          <div id="container-ml">
+          </div>
+        </div>
+
       </div>
       </div>
 
     </div>
 
-    
+  <script>
+  // Adiciona o evento para detectar Enter e tirar o foco
+  const inputBuscarCodigo = document.getElementById('buscarocodigo');
+  inputBuscarCodigo.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      AtulizarInicio(this.value);
+      this.blur();
+    }
+  });
+  </script>
+
   <script src="script.js"></script>
 </body>

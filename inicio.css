@@ -73,19 +73,13 @@ body{
 
 /* Cabeçalho */
 h3 {
-  margin-top: 30px;
   margin-bottom: 15px;
   font-weight: 700;
   color: #222;
 }
 
-/* Espaçamento extra com nav */
-nav {
-  margin-bottom: 15px;
-}
-
 #textoConteudo{
-    width: 90%;
+  width: 90%;
   padding: 8px 10px;
   font-family: Arial, sans-serif;
   font-size: 14px;
@@ -107,4 +101,66 @@ nav {
     resize: vertical;
     transition: border-color 0.3s ease;
     min-height: 60px;
+}
+
+.texto_ml {
+  display: flex;
+  gap: 5px; /* Espaço entre os dois lados, opcional */
+}
+
+.texto_ml > div {
+  flex: 1; /* Cada div ocupa metade do espaço disponível */
+}
+
+.texto_ml textarea {
+  width: 100%;
+  resize: vertical; /* Usuário pode redimensionar só na vertical */
+}
+
+.texto_ml input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box; /* Para incluir padding na largura */
+}
+
+
+.titulo_texto{
+  display: flex;
+  align-items: center;
+  
+}
+
+#container-ml .input-wrapper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+#container-ml .input-veiculo {
+  flex: 1;
+  margin-right: 8px;
+  padding: 6px 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+#container-ml .btn-copiar {
+  padding: 6px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  border: 1px solid #007bff;
+  background-color: #007bff;
+  color: white;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+#container-ml .btn-copiar:hover {
+  background-color: #0056b3;
+}
+
+.input-error {
+  border-color: red !important;
+  background-color: #f7acac;
 }

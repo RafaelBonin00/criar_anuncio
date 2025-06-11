@@ -129,7 +129,7 @@ function limparCampos() {
 }
 
 async function salvarValoresApi() {
-  const codigo = document.getElementById('codigoLista').textContent;
+  const codigo = document.getElementById('codigo').value;
   const peca_cadastro = document.getElementById('peca_cadastro').value;
   const complemento_titulo = document.getElementById('complemento_titulo').value;
   const complemento_itens = document.getElementById('complemento_itens').value;

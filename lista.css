@@ -87,3 +87,22 @@
   background-color: #1f6391;
   outline: none;
 }
+
+#baixarBtn {
+  background-color: #f77307;
+  color: white;
+  border: none;
+  padding: 8px 18px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 4px;
+  cursor: pointer;
+  vertical-align: middle;
+  transition: background-color 0.3s ease;
+}
+
+#baixarBtn:hover,
+#baixarBtn:focus {
+  background-color: #1f6391;
+  outline: none;
+}
