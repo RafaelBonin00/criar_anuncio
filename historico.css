@@ -35,7 +35,8 @@
 
 /* Hover nas linhas */
 #tabelaRegistros tbody tr:hover {
-  background-color: #e1f0ff;
+  background-color: #65b2ff;
+  font-weight: 600;
 }
 /* Data formatada, estilo mais leve */
 .data-salvo {
