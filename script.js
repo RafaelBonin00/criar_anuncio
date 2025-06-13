@@ -492,8 +492,6 @@ function gerarTitulo(dados) {
   // original e numero_original
   if (dados.original) {
     descricao += " ORIGINAL";
-  } else if (dados.num_original && dados.num_original.trim() !== "") {
-    descricao += " " + dados.num_original.trim();
   }
 
   if(dados.num_original != ""){
@@ -635,7 +633,6 @@ function gerarInputsML(dados) {
   }
 
   if (dados.finalizado && Array.isArray(dados.arrayml)) {
-    // Usar dados.arrayml para gerar inputs, 1 input para cada elemento do arrayml
     dados.arrayml.forEach((texto, index) => {
       const idInput = `input_finalizado_${index}`;
       const wrapper = document.createElement('div');
@@ -647,6 +644,7 @@ function gerarInputsML(dados) {
       input.id = idInput;
       input.classList.add('input-veiculo');
       input.addEventListener('input', checarTamanhoInput);
+      input.addEventListener('blur', checarTamanhoInput); // <-- ADICIONADO
       input.setAttribute('onblur', 'salvarValoresApi()');
       input.autocomplete = 'off';
 
@@ -659,9 +657,11 @@ function gerarInputsML(dados) {
       wrapper.appendChild(input);
       wrapper.appendChild(btnCopy);
       container.appendChild(wrapper);
+
+      // Verifica o tamanho assim que o input é criado
+      checarTamanhoInput({ target: input }); // <-- ADICIONADO
     });
   } else {
-    // Continua seu fluxo normal para dados.finalizado == false
     const veiculos = dados.veiculos || [];
 
     if (veiculos.length === 1) {
@@ -685,9 +685,9 @@ function gerarInputsML(dados) {
         input.id = idInput;
         input.classList.add('input-veiculo');
         input.addEventListener('input', checarTamanhoInput);
+        input.addEventListener('blur', checarTamanhoInput); // <-- ADICIONADO
         input.setAttribute('onblur', 'salvarValoresApi()');
         input.autocomplete = 'off';
-
 
         const btnCopy = document.createElement('button');
         btnCopy.textContent = 'Copiar';
@@ -698,6 +698,9 @@ function gerarInputsML(dados) {
         wrapper.appendChild(input);
         wrapper.appendChild(btnCopy);
         container.appendChild(wrapper);
+
+        // Verifica o tamanho logo que cria o input
+        checarTamanhoInput({ target: input }); // <-- ADICIONADO
       }
     } else if (veiculos.length > 1) {
       veiculos.forEach((v, idx) => {
@@ -719,6 +722,7 @@ function gerarInputsML(dados) {
           input.placeholder = `Veículo ${idx + 1}`;
           input.classList.add('input-veiculo');
           input.addEventListener('input', checarTamanhoInput);
+          input.addEventListener('blur', checarTamanhoInput); // <-- ADICIONADO
 
           const btnCopy = document.createElement('button');
           btnCopy.textContent = 'Copiar';
@@ -729,6 +733,9 @@ function gerarInputsML(dados) {
           wrapper.appendChild(input);
           wrapper.appendChild(btnCopy);
           container.appendChild(wrapper);
+
+          // Checar tamanho na criação
+          checarTamanhoInput({ target: input }); // <-- ADICIONADO
         }
       });
     }

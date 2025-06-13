@@ -103,6 +103,10 @@ h3 {
     min-height: 60px;
 }
 
+ label.label-inline strong {
+    color: rgb(255, 30, 0); /* azul, por exemplo */
+  }
+
 .texto_ml {
   display: flex;
   gap: 5px; /* Espaço entre os dois lados, opcional */
