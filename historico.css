@@ -20,7 +20,7 @@
 }
 
 #tabelaRegistros th, #tabelaRegistros td {
-  padding-left: 12px;       /* padding só na esquerda */
+  padding-left: 5px;       /* padding só na esquerda */
   padding-top: 0;
   padding-bottom: 0;
   padding-right: 0;
@@ -63,7 +63,7 @@
 
 /* Cores específicas por grupo */
 .flag-finalizado {
-  background-color: #e74c3c; /* Vermelho */
+  background-color: #4b8b01; /* Vermelho */
 }
 
 .flag-original,
@@ -84,4 +84,19 @@
 .flag-superior,
 .flag-inferior {
   background-color: #34495e; /* Azul escuro */
+}
+
+
+.btn-editar {
+  margin: 0;
+  padding: 5px 10px;
+  background-color: #ff0000;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.btn-editar:hover {
+  background-color: #0056b3;
 }

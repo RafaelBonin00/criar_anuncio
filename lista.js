@@ -85,3 +85,31 @@ async function excluirItem(codigo) {
     throw new Error(`Erro ao excluir: ${text}`);
   }
 }
+
+
+async function atualizarItem(codigo, novoInfTec) {
+  const url = `${supabaseUrl}?codigo=eq.${codigo}`;
+  
+  const response = await fetch(url, {
+    method: 'PATCH',
+    headers: {
+      'apikey': supabaseKey,
+      'Authorization': `Bearer ${supabaseKey}`,
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Prefer': 'return=representation' // Isso instrui o Supabase a retornar o item atualizado
+    },
+    body: JSON.stringify({
+      inf_tec: novoInfTec
+    })
+  });
+
+  if (!response.ok) {
+    const text = await response.text();
+    throw new Error(`Erro ao atualizar: ${text}`);
+  }
+
+  // Opcional: retorna o item atualizado
+  const data = await response.json();
+  return data;
+}

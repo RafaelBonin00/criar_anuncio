@@ -28,7 +28,7 @@
 }
 
 #catalogo-container button {
-  background-color: #e74c3c;
+  
   border: none;
   color: white;
   padding: 6px 12px;
@@ -40,8 +40,14 @@
   transition: background-color 0.3s ease;
 }
 
-#catalogo-container button:hover {
-  background-color: #c0392b;
+
+
+.btn-excluir{
+  background-color: #e74c3c;
+}
+
+.btn-excluir:hover {
+  background-color: #af3527;
 }
 
 #catalogo-container button:focus {
@@ -105,4 +111,27 @@
 #baixarBtn:focus {
   background-color: #1f6391;
   outline: none;
+}
+
+.btn-editar {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  font-size: 14px;
+  gap: 5px;
+  transition: background-color 0.2s ease;
+}
+
+.btn-editar:hover {
+  background-color: #0056b3;
+}
+
+.icone-editar {
+  width: 16px;
+  height: 16px;
+  fill: white;
 }

@@ -46,7 +46,6 @@ async function carregarHistorico() {
 
       // Flags - mostra só as flags true com labels legíveis
           const flags = [
-      { key: 'finalizado', label: 'Finalizado', className: 'flag-finalizado' },
       { key: 'original', label: 'Original', className: 'flag-original' },
       { key: 'generofeminino', label: 'Gênero Feminino', className: 'flag-generofeminino' },
       { key: 'ladodireito', label: 'Lado Direito', className: 'flag-ladodireito' },
@@ -88,6 +87,16 @@ async function carregarHistorico() {
         <td class="data-salvo">${dataFormatada}</td>
       `;
 
+      // Adiciona célula com botão "Remover do histórico"
+      const tdAcoes = document.createElement('td');
+      const botaoEditar = document.createElement('button');
+      botaoEditar.textContent = 'X';
+      botaoEditar.className = 'btn-editar';
+      botaoEditar.onclick = () => removerDoHistorico(item.codigo);
+      tdAcoes.appendChild(botaoEditar);
+      tr.appendChild(tdAcoes);
+
+
       tbody.appendChild(tr);
     }
   });
@@ -95,5 +104,40 @@ async function carregarHistorico() {
   // Caso não tenha registros para mostrar
   if (tbody.children.length === 0) {
     tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;">Nenhum registro histórico encontrado.</td></tr>`;
+  }
+}
+
+
+async function removerDoHistorico(codigo) {
+  const url = `${supabaseUrl}?codigo=eq.${codigo}`;
+
+  try {
+    const response = await fetch(url, {
+      method: 'PATCH',
+      headers: {
+        'apikey': supabaseKey,
+        'Authorization': `Bearer ${supabaseKey}`,
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Prefer': 'return=representation'
+      },
+      body: JSON.stringify({
+        historico: false,
+        finalizado: false
+      })
+    });
+
+    if (!response.ok) {
+      const text = await response.text();
+      throw new Error(`Erro ao atualizar: ${text}`);
+    }
+
+    // Atualiza a tabela após sucesso
+    alert("Item removido do histórico com sucesso.");
+    await carregarHistorico();
+
+  } catch (error) {
+    console.error("Erro ao remover do histórico:", error);
+    alert("Erro ao remover do histórico.");
   }
 }

@@ -528,23 +528,21 @@ async function carregaLista() {
   container.innerHTML = '';
 
   dados.forEach(item => {
-    // Se historico for false, mostra na lista
     if (item.historico === false || item.historico === 'FALSE') {
       const div = document.createElement('div');
+      div.style.marginBottom = '10px';
 
-      // Cria botão Excluir
+      // Botão Excluir
       const btnExcluir = document.createElement('button');
-      btnExcluir.textContent = 'Excluir';
-      btnExcluir.style.marginRight = '10px';
+      btnExcluir.className = 'btn-excluir';
+      btnExcluir.textContent = 'X';
 
-      // Evento de clique no botão
       btnExcluir.addEventListener('click', async () => {
         const confirma = confirm(`Deseja excluir o código ${item.codigo}?`);
         if (confirma) {
           try {
             await excluirItem(item.codigo);
             alert(`Item ${item.codigo} excluído!`);
-            // Atualiza a lista após exclusão
             carregaLista();
           } catch (error) {
             alert('Erro ao excluir o item.');
@@ -553,7 +551,31 @@ async function carregaLista() {
         }
       });
 
+      // Botão Editar
+      const btnEditar = document.createElement('button');
+      btnEditar.className = 'btn-editar';
+      btnEditar.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" class="icone-editar" viewBox="0 0 24 24">
+          <path d="M3 17.25V21h3.75l11.02-11.02-3.75-3.75L3 17.25zM21.41 6.34c.38-.38.38-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+        </svg>`;
+
+      btnEditar.addEventListener('click', async () => {
+      const novoInfTec = prompt(`Editar informação técnica de ${item.codigo}:`, item.inf_tec);
+      if (novoInfTec !== null && novoInfTec.trim() !== '') {
+        try {
+          const atualizado = await atualizarItem(item.codigo, novoInfTec);
+          alert(`Item ${item.codigo} atualizado com sucesso!`);
+          carregaLista();
+        } catch (error) {
+          alert('Erro ao atualizar o item.');
+          console.error(error);
+        }
+      }
+    });
+
+
       div.appendChild(btnExcluir);
+      div.appendChild(btnEditar);
       div.appendChild(document.createTextNode(`${item.codigo} - ${item.inf_tec}`));
       container.appendChild(div);
     }
@@ -563,6 +585,7 @@ async function carregaLista() {
     container.textContent = 'Nenhum item pendente encontrado.';
   }
 }
+
 
 function copiarTexto(idInput) {
   const input = document.getElementById(idInput);
